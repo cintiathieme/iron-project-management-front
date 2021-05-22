@@ -14,6 +14,9 @@ const GeneralTemplate = ({ children }) => (
           <Link to="/">Login</Link>
         </Nav.Item>
         <Nav.Item>
+          <Link to="/signup">Signup</Link>
+        </Nav.Item>
+        <Nav.Item>
           <Link to="/projects">Projects</Link>
         </Nav.Item>
       </Nav>

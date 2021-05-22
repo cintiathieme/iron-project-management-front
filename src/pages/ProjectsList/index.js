@@ -24,8 +24,6 @@ const ProjectsList = () => {
     getProjects();
   }, []); // Como um componentDidMount!! (chama uma vez somente após o compoenente ser MONTADO)
 
-  
-
   const createProject = async values => {
     try {
       setIsLoading(true); // coloco a pagina no estado carregando
