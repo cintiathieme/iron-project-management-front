@@ -1,0 +1,6 @@
+- Terminar integração com o signup pelo front-end
+- Voltar para o back-end para PROTEGER as nossas roas de projetos e tasks
+- Voltar para o front-end para fazermos a integração com o LOGIN!!
+    --- Logar o usuário, transferi-lo para a rota de projetos, guardar o token recebido pelo back-end
+    --- Configurar o nosso axios para enviar o token em TODAS as requisições de rota que for protegida
+    --- Proteger as rotas do front-end (/projects e /projects/:id)

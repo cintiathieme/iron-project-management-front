@@ -6,19 +6,36 @@ class ApiService {
       baseURL: process.env.REACT_APP_PROJECTS_API_URL,
     });
 
-    this.api.interceptors.request.use(config => {
-      console.log(config);
+    this.api.interceptors.request.use(
+      config => {
+        // verificar se o request que eu estou fazendo é para rota protegida
+        if (config.url.includes('/auth')) {
+          return config;
+        }
+        // se for requet para rota protegida, preciso pegar o token no localStorage e inserir em um header "Authorization"
+        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+        return config; // após retornar o config ele inicia o request!
+      },
+    ); // aqui conseguimos colocar qualquer informação dentro do request ANTES dele ser feito para a API!!!
 
-      config.headers.banana = 'maça'; // incluir este header "banana" em TODOS os requests
+    this.api.interceptors.response.use(
+      config => config, // callback em caso do request ser bem sucedido!!!
+      error => { // callback em caso do request dar algum erro!!!
+        if (error.response.status === 401 && error.response.data.type === 'Auth') {
+          localStorage.removeItem('token');
+          window.location.href = '/'; // forçando o user a voltar para o login!!!
+        }
 
-      return config; // após retornar o config ele inicia o request!
-    }); // aqui conseguimos colocar qualquer informação dentro do request ANTES dele ser feito para a API!!!
+        return error;
+      }
+    );
   }
 
   getProjects = async () => {
     const { data } = await this.api.get('/projects');
 
     return data; // listagem de projetos
+
   }
 
   createProject = async projectData => {
@@ -29,10 +46,15 @@ class ApiService {
     });
   }
 
-  signupUser = async (userData) => {
-    
+  signupUser = async userData => {
+    await this.api.post('/auth/signup', userData);
   }
 
+  loginUser = async userData => {
+    const { data } = await this.api.post('/auth/login', userData);
+
+    return data.message;
+  }
 
 }
 
