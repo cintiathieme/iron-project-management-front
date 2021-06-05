@@ -8,6 +8,7 @@ const Button = ({
   type,
   size,
   isLoading,
+  onClick,
   className,
   children,
 }) => (
@@ -16,6 +17,7 @@ const Button = ({
     type={type}
     size={size}
     disabled={isLoading}
+    onClick={onClick}
     className={className}
   >
     {isLoading && <Spinner animation="border" variant="light" />} 

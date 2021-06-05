@@ -38,12 +38,22 @@ class ApiService {
 
   }
 
+  getProjectDetail = async projectId => {
+    const { data } = await this.api.get(`/projects/${projectId}`);
+
+    return data;
+  }
+
   createProject = async projectData => {
     await this.api({
       url: '/projects',
       method: 'POST',
       data: projectData,
     });
+  }
+
+  createTask = async taskData => {
+    await this.api.post('/tasks', taskData);
   }
 
   signupUser = async userData => {
